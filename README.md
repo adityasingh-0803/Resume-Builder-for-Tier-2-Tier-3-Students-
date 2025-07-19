@@ -1,6 +1,6 @@
 # 🧠 Resume Builder - VibeCode Edition
 
-![Netlify Status](https://resumebuilderfortierstudents.netlify.app/)
+![Netlify Status]([https://resumebuilderfortierstudents.netlify.app/](https://resumebuilderfortierstudents.netlify.app/))
 
 A modern resume builder built using **React + Tailwind CSS**, featuring sleek icons, editable sections, and one-click PDF export. Build and download your resume instantly with an elegant interface.
 
