@@ -1,103 +1,125 @@
-import React, { useState } from "react";
-import jsPDF from "jspdf";
-import "./App.css";
+import React, { useState } from 'react';
+import './App.css';
+import { FaGithub, FaLinkedin, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import jsPDF from 'jspdf';
 
 function App() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    linkedin: "",
-    github: "",
-    education: "",
-    skills: "",
-    projects: "",
-    experience: "",
+    name: '',
+    email: '',
+    phone: '',
+    education: '',
+    skills: '',
+    projects: '',
   });
 
+  const [showLinks, setShowLinks] = useState(false);
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const downloadPDF = () => {
+  const generatePDF = () => {
     const doc = new jsPDF();
-    doc.setFontSize(14);
-    doc.text(formData.name, 10, 10);
-    doc.setFontSize(10);
-    doc.text(`${formData.email} | ${formData.phone}`, 10, 20);
-    doc.text(`${formData.linkedin} | ${formData.github}`, 10, 30);
+    doc.setFontSize(18);
+    doc.text('Resume', 20, 20);
 
-    doc.line(10, 35, 200, 35);
+    doc.setFontSize(12);
+    doc.text(`Name: ${formData.name}`, 20, 40);
+    doc.text(`Email: ${formData.email}`, 20, 50);
+    doc.text(`Phone: ${formData.phone}`, 20, 60);
+    doc.text(`Education: ${formData.education}`, 20, 70);
+    doc.text(`Skills: ${formData.skills}`, 20, 80);
+    doc.text(`Projects: ${formData.projects}`, 20, 90);
 
-    doc.text("Education:", 10, 45);
-    doc.text(formData.education, 20, 52);
-
-    doc.text("Skills:", 10, 62);
-    doc.text(formData.skills, 20, 69);
-
-    doc.text("Projects:", 10, 79);
-    doc.text(formData.projects, 20, 86);
-
-    doc.text("Experience:", 10, 96);
-    doc.text(formData.experience, 20, 103);
-
-    doc.save("resume.pdf");
+    doc.save('resume.pdf');
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <h1 className="text-3xl font-bold text-center mb-6 flex items-center justify-center">
-        <span className="mr-2">📄</span> Resume Builder
-      </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white shadow p-4 rounded-md space-y-3">
-          <h2 className="text-xl font-semibold">Personal Info</h2>
-          <input name="name" placeholder="Full Name" className="input" value={formData.name} onChange={handleChange} />
-          <input name="email" placeholder="Email" className="input" value={formData.email} onChange={handleChange} />
-          <input name="phone" placeholder="Phone" className="input" value={formData.phone} onChange={handleChange} />
-          <input name="linkedin" placeholder="LinkedIn" className="input" value={formData.linkedin} onChange={handleChange} />
-          <input name="github" placeholder="GitHub" className="input" value={formData.github} onChange={handleChange} />
+    <div className="min-h-screen bg-gray-100 p-4 font-sans">
+      <div className="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 className="text-3xl font-bold text-center mb-6">Resume Builder</h1>
 
-          <h2 className="text-xl font-semibold mt-4">Resume Details</h2>
-          <textarea name="education" placeholder="Education" className="input" value={formData.education} onChange={handleChange} />
-          <textarea name="skills" placeholder="Skills" className="input" value={formData.skills} onChange={handleChange} />
-          <textarea name="projects" placeholder="Projects" className="input" value={formData.projects} onChange={handleChange} />
-          <textarea name="experience" placeholder="Experience" className="input" value={formData.experience} onChange={handleChange} />
+        {/* Toggle Social Links */}
+        <div className="text-center mb-4">
+          <button
+            onClick={() => setShowLinks(!showLinks)}
+            className="bg-gray-800 text-white px-4 py-2 rounded-lg flex items-center justify-center mx-auto transition"
+          >
+            {showLinks ? <FaChevronUp className="mr-2" /> : <FaChevronDown className="mr-2" />}
+            {showLinks ? 'Hide Profiles' : 'Show Profiles'}
+          </button>
         </div>
 
-        <div className="bg-white shadow p-4 rounded-md">
-          <div className="space-y-2">
-            <h2 className="text-xl font-bold">{formData.name}</h2>
-            <p className="text-sm text-gray-700">
-              📧 {formData.email} | 📞 {formData.phone}
-            </p>
-            <p className="text-sm text-gray-700">
-              🌐 {formData.linkedin} | 💻 {formData.github}
-            </p>
-
-            <hr className="my-2" />
-
-            <div>
-              <h3 className="font-semibold">🎓 Education</h3>
-              <p>{formData.education}</p>
-            </div>
-            <div>
-              <h3 className="font-semibold">🛠️ Skills</h3>
-              <p>{formData.skills}</p>
-            </div>
-            <div>
-              <h3 className="font-semibold">📁 Projects</h3>
-              <p>{formData.projects}</p>
-            </div>
-            <div>
-              <h3 className="font-semibold">💼 Experience</h3>
-              <p>{formData.experience}</p>
-            </div>
-            <button onClick={downloadPDF} className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-              Download PDF
-            </button>
+        {/* Social Icons */}
+        {showLinks && (
+          <div className="flex justify-center space-x-6 mb-6">
+            <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+              <FaGithub className="text-3xl text-gray-700 hover:text-black" />
+            </a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+              <FaLinkedin className="text-3xl text-blue-600 hover:text-blue-800" />
+            </a>
           </div>
+        )}
+
+        {/* Form */}
+        <form className="space-y-4">
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            value={formData.name}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            value={formData.email}
+          />
+          <input
+            type="text"
+            name="phone"
+            placeholder="Phone"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            value={formData.phone}
+          />
+          <textarea
+            name="education"
+            placeholder="Education"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            value={formData.education}
+          />
+          <textarea
+            name="skills"
+            placeholder="Skills"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            value={formData.skills}
+          />
+          <textarea
+            name="projects"
+            placeholder="Projects"
+            className="w-full border p-2 rounded"
+            onChange={handleChange}
+            value={formData.projects}
+          />
+        </form>
+
+        {/* Generate Button */}
+        <div className="text-center mt-6">
+          <button
+            onClick={generatePDF}
+            className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition"
+          >
+            Download Resume PDF
+          </button>
         </div>
       </div>
     </div>
