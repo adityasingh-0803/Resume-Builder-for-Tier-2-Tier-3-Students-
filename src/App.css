@@ -1,7 +1,52 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.app {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+  background: #f9f9f9;
+}
 
-body {
-  @apply font-sans bg-gray-100 text-gray-800;
+.form input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.download-btn {
+  margin: 15px 0;
+  padding: 10px 15px;
+  background-color: #0077b6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.resume {
+  background: white;
+  padding: 25px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.resume h2 {
+  margin-top: 0;
+}
+
+.resume p {
+  margin: 8px 0;
+}
+
+.resume a {
+  color: #0077b6;
+  text-decoration: none;
+}
+
+.icon {
+  margin-right: 5px;
 }
